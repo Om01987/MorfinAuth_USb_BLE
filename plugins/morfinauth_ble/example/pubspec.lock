@@ -161,13 +161,6 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
-  morfinauth_core:
-    dependency: transitive
-    description:
-      path: "../../morfinauth_core"
-      relative: true
-    source: path
-    version: "0.0.1"
   path:
     dependency: transitive
     description:
