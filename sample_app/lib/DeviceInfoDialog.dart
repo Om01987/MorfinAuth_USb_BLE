@@ -1,14 +1,14 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:morfinauth_usb/morfinauth_usb.dart'; // UPDATED IMPORT
-import 'provider/clientKeyProvider.dart'; // FIXED IMPORT
+import 'package:morfinauth_usb/morfinauth_usb.dart';
+import 'provider/clientKeyProvider.dart';
 import 'package:provider/provider.dart';
 import 'helper/CommonWidget.dart';
 import 'enums/DeviceDetection.dart';
 import 'helper/DeviceInfo.dart';
 import 'helper/SharePreferenceHelper.dart';
-import 'provider/DeviceInfoProvider.dart'; // FIXED IMPORT
+import 'provider/DeviceInfoProvider.dart';
 
 class DeviceInfoDialog extends StatefulWidget {
   const DeviceInfoDialog({Key? key}) : super(key: key);
@@ -123,7 +123,7 @@ class DeviceInfoDialogState extends State<DeviceInfoDialog> {
               INIT_STATUS = "";
             });
           }
-          bool ret = await MorfinauthUsb.IsDeviceConnected(deviceName); // UPDATED
+          bool ret = await MorfinauthUsb.IsDeviceConnected(deviceName);
         } else {
           device = "Device Status: Device Not Connected";
           setLogs("Device Not Connected", true);
@@ -319,14 +319,14 @@ class DeviceInfoDialogState extends State<DeviceInfoDialog> {
     }
 
     try {
-      int ret = await MorfinauthUsb.InitWithLock(deviceName,clientKey); // UPDATED
+      int ret = await MorfinauthUsb.InitWithLock(deviceName,clientKey);
       setLogs("ret form flutter device info dialog:: $ret", false);
 
       if (ret != 0) {
-        String errorMessage = await MorfinauthUsb.GetErrorMessage(ret); // UPDATED
+        String errorMessage = await MorfinauthUsb.GetErrorMessage(ret);
         setLogs("Init: $ret ($errorMessage)", true);
       } else {
-        String device = await MorfinauthUsb.GetDeviceInfo(); // UPDATED
+        String device = await MorfinauthUsb.GetDeviceInfo();
         sharePreferenceHelper.setDeviceInfo(device);
         DeviceInfo deviceInfo = CommonWidget.convertStringToDeviceInfo(device);
         if (mounted) {
@@ -359,13 +359,13 @@ class DeviceInfoDialogState extends State<DeviceInfoDialog> {
   Future<void> Uninit() async {
     String displayStatus = "";
     try {
-      int ret = await MorfinauthUsb.Uninit(); // UPDATED
+      int ret = await MorfinauthUsb.Uninit();
       await (ret);
       if (ret == 0) {
         displayStatus = "UnInit Success";
         setLogs(displayStatus, false);
       } else {
-        String error = await MorfinauthUsb.GetErrorMessage(ret); // UPDATED
+        String error = await MorfinauthUsb.GetErrorMessage(ret);
         await (error);
         displayStatus = "UnInit: $ret ($error)";
         setLogs(displayStatus, true);

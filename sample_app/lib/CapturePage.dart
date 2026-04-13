@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:morfinauth_usb/morfinauth_usb.dart'; // UPDATED IMPORT
+import 'package:morfinauth_usb/morfinauth_usb.dart';
 import 'package:provider/provider.dart';
 import '../enums/ImageFormatType.dart';
 import '../enums/TemplateFormatType.dart';
