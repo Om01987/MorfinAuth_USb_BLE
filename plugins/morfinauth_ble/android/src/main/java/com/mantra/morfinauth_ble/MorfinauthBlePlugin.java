@@ -20,6 +20,9 @@ import com.mantra.morfinauth.enums.ImageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.MethodCall;
@@ -199,6 +202,21 @@ public class MorfinauthBlePlugin implements FlutterPlugin, MethodChannel.MethodC
 
       case "stopCapture":
         result.success(morfinAuthBLE.StopCapture());
+        break;
+
+      case "getSDKVersion":
+        result.success(morfinAuthBLE.GetSDKVersion());
+        break;
+
+      case "getSupportedDevices":
+        List<String> deviceList = new ArrayList<>();
+        int ret = morfinAuthBLE.GetSupportedDeviceList(deviceList);
+        if (ret == 0) {
+          result.success(deviceList);
+        } else {
+          // Return empty list if there's an error so Flutter doesn't crash
+          result.success(new ArrayList<String>());
+        }
         break;
 
       case "getBatteryInformation":

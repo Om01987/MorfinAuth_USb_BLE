@@ -102,4 +102,28 @@ class MorfinauthBle {
       'advertisement': advertisement,
     });
   }
+
+  // ==========================================
+  // DEVICE INFO METHODS (NEW)
+  // ==========================================
+
+  /// Fetch the native SDK version directly from the .aar file
+  Future<String> getSDKVersion() async {
+    try {
+      final String? version = await _channel.invokeMethod('getSDKVersion');
+      return version ?? "Unknown";
+    } catch (e) {
+      return "Unknown ($e)";
+    }
+  }
+
+  /// Fetch the list of supported BLE devices (e.g., Mark10BL, Melo20BL)
+  Future<List<String>> getSupportedDevices() async {
+    try {
+      final List<dynamic>? devices = await _channel.invokeMethod('getSupportedDevices');
+      return devices?.map((e) => e.toString()).toList() ?? [];
+    } catch (e) {
+      return [];
+    }
+  }
 }

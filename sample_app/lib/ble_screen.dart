@@ -38,9 +38,13 @@ class _BleScreenState extends State<BleScreen> implements BottomDialogRefreshLis
   List<Map<String, dynamic>> _discoveredDevices = [];
   bool _isScanning = false;
 
+  // String deviceInfo = "Device Status: Not Connected";
+  // String _platformVersion = 'Unknown';
+  // String GET_SDK_VERSION = "SDK Version: ";
+
   String deviceInfo = "Device Status: Not Connected";
-  String _platformVersion = 'Unknown';
-  String GET_SDK_VERSION = "SDK Version: ";
+  String _platformVersion = 'Fetching...';
+  String _supportedDevices = 'Fetching...'; // New variable
 
   TextEditingController getKeyController = TextEditingController();
   TextEditingController setKeyController = TextEditingController();
@@ -187,11 +191,31 @@ class _BleScreenState extends State<BleScreen> implements BottomDialogRefreshLis
   // ==========================================
   // USB UI PARITY METHODS
   // ==========================================
+  /*
   Future<void> GetSDKVersion() async {
     // Replace with real BLE SDK call if implemented in native wrapper
     setState(() {
       _platformVersion = "Morfin Auth SDK 2.0.0.8";
     });
+  }*/
+
+  Future<void> GetSDKVersion() async {
+    try {
+      // Fetch data from the native SDK
+      String version = await _morfinauthBlePlugin.getSDKVersion();
+      List<String> devices = await _morfinauthBlePlugin.getSupportedDevices();
+
+      setState(() {
+        _platformVersion = version;
+        _supportedDevices = devices.isNotEmpty ? devices.join(", ") : "None found";
+      });
+    } catch (e) {
+      setState(() {
+        _platformVersion = "Error";
+        _supportedDevices = "Error";
+      });
+      print("Error fetching SDK info: $e");
+    }
   }
 
   Future<String> genClientKey(String clientKey) async {
@@ -276,13 +300,14 @@ d4SN7l3+Vthj9tjIImqJSSx7NnidQabF5PfbnDTjEXrb70TEb7PH6xG/ykPRsPr6
               ),
               const SizedBox(height: 15.0),
 
+
               // 2. SDK Info Box
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "SDK Version: $_platformVersion\n\n$deviceInfo\n",
+                  "SDK Version: $_platformVersion\nSupported Devices: $_supportedDevices\n\n$deviceInfo\n",
                   style: const TextStyle(color: Colors.black),
                   textAlign: TextAlign.center,
                 ),
