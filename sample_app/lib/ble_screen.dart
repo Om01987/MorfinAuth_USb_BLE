@@ -289,7 +289,7 @@ d4SN7l3+Vthj9tjIImqJSSx7NnidQabF5PfbnDTjEXrb70TEb7PH6xG/ykPRsPr6
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              // 1. Scan & Connect Button (Unique to BLE)
+              // 1. Scan & Connect Button (for BLE only)
               ElevatedButton.icon(
                 onPressed: _showBleScanDialog,
                 icon: const Icon(Icons.bluetooth_searching),

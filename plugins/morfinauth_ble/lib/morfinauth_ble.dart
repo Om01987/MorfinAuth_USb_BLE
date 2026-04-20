@@ -104,7 +104,7 @@ class MorfinauthBle {
   }
 
   // ==========================================
-  // DEVICE INFO METHODS (NEW)
+  // DEVICE INFO METHODS
   // ==========================================
 
   /// Fetch the native SDK version directly from the .aar file
